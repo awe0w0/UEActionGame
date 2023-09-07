@@ -31,6 +31,10 @@ void AMainCharacter::MoveForward(float Value) {
 	AddMovementInput(GetActorForwardVector(), Value);
 }
 
+void AMainCharacter::MoveRight(float Value) {
+	AddMovementInput(GetActorRightVector(), Value);
+}
+
 // Called every frame
 void AMainCharacter::Tick(float DeltaTime)
 {
@@ -43,9 +47,10 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-
+	PlayerInputComponent->BindAxis("MoveRight", this, &AMainCharacter::MoveRight);
 	PlayerInputComponent->BindAxis("MoveForward", this, &AMainCharacter::MoveForward);
 
 	PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
+	PlayerInputComponent->BindAxis("Lookup", this, &APawn::AddControllerPitchInput);
 }
 
