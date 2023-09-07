@@ -27,6 +27,10 @@ void AMainCharacter::BeginPlay()
 	
 }
 
+void AMainCharacter::MoveForward(float Value) {
+	AddMovementInput(GetActorForwardVector(), Value);
+}
+
 // Called every frame
 void AMainCharacter::Tick(float DeltaTime)
 {
@@ -39,5 +43,9 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+
+	PlayerInputComponent->BindAxis("MoveForward", this, &AMainCharacter::MoveForward);
+
+	PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
 }
 
