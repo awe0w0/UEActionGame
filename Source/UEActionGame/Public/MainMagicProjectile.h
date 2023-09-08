@@ -37,4 +37,6 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	// Declare FireInDirection function
+	void FireInDirection(const FVector& ShootDirection);
 };

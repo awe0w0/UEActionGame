@@ -41,3 +41,13 @@ void AMainMagicProjectile::Tick(float DeltaTime)
 
 }
 
+void AMainMagicProjectile::FireInDirection(const FVector& ShootDirection)
+{
+	// Set the initial velocity of the projectile
+	UProjectileMovementComponent* ProjectileMovement = FindComponentByClass<UProjectileMovementComponent>();
+	if (ProjectileMovement)
+	{
+		// Set the velocity based on the specified direction
+		ProjectileMovement->Velocity = ShootDirection * ProjectileMovement->InitialSpeed;
+	}
+}

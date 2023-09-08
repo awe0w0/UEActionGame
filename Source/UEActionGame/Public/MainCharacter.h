@@ -22,6 +22,10 @@ public:
 	// Sets default values for this character's properties
 	AMainCharacter();
 
+	// Declare a function to shoot the projectile
+	UFUNCTION(BlueprintCallable, Category = "MainCharacter")
+	void ShootProjectile();
+
 protected:
 
 	UPROPERTY(VisibleAnywhere)
