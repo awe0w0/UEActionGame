@@ -39,6 +39,7 @@ protected:
 
 	void MoveForward(float Value);
 	void MoveRight(float Value);
+	void Jump(float Value);
 	void PrimaryAttack();
 
 public:	
@@ -47,5 +48,9 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	// ÉùÃ÷ JumpStrength ±äÁ¿
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character")
+	float JumpStrength;
 
 };

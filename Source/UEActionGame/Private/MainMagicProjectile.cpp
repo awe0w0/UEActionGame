@@ -16,6 +16,7 @@ AMainMagicProjectile::AMainMagicProjectile()
 	SetActorHiddenInGame(false); // 确保投射物在游戏中可见
 	
 	SphereComp = CreateDefaultSubobject<USphereComponent>("SphereComp");
+	SphereComp->SetCollisionProfileName("Projectile");
 	RootComponent = SphereComp;
 
 	EffectComp = CreateDefaultSubobject<UParticleSystemComponent>("EffectComp");

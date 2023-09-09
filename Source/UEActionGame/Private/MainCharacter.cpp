@@ -19,6 +19,9 @@ AMainCharacter::AMainCharacter()
 	SpringArmComp->bUsePawnControlRotation = true;
 	SpringArmComp->SetupAttachment(RootComponent);
 
+	// 设置默认的跳跃力度
+	JumpStrength = 500.0f; // 根据您的项目需求设置适当的值
+
 	CameraComp = CreateDefaultSubobject<UCameraComponent>("CameraComponent");
 	CameraComp->SetupAttachment(SpringArmComp);
 
@@ -31,27 +34,6 @@ AMainCharacter::AMainCharacter()
 
 
 }
-
-//void AMainCharacter::ShootProjectile()
-//{
-//	// Create a projectile and set its spawn location and rotation
-//	FVector CameraLocation;
-//	FRotator CameraRotation;
-//	GetActorEyesViewPoint(CameraLocation, CameraRotation);
-//
-//	FVector ShootDirection = CameraRotation.Vector();
-//	FVector StartLocation = CameraLocation + ShootDirection * 100.0f; // Adjust spawn location as needed
-//
-//	// Spawn the projectile
-//	AMainMagicProjectile* Projectile = GetWorld()->SpawnActor<AMainMagicProjectile>(StartLocation, CameraRotation);
-//
-//	// Set the projectile's initial velocity
-//	if (Projectile)
-//	{
-//		FVector LaunchDirection = CameraRotation.Vector();
-//		Projectile->FireInDirection(LaunchDirection);
-//	}
-//}
 
 // Called when the game starts or when spawned
 void AMainCharacter::BeginPlay()
@@ -79,6 +61,8 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	PlayerInputComponent->BindAxis("Lookup", this, &APawn::AddControllerPitchInput);
 
 	PlayerInputComponent->BindAction("PrimaryAttack", IE_Pressed, this, &AMainCharacter::PrimaryAttack);
+
+	PlayerInputComponent->BindAxis("jump", this, &AMainCharacter::Jump);
 	// Bind the input to the ShootProjectile function
 	//PlayerInputComponent->BindAction("PrimaryAttack", IE_Pressed, this, &AMainCharacter::ShootProjectile);
 }
@@ -110,4 +94,16 @@ void AMainCharacter::PrimaryAttack() {
 	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
 	GetWorld()->SpawnActor<AActor>(ProjectileClass, SpawnTM, SpawnParams);
+}
+
+void AMainCharacter::Jump(float Value) {
+	if (CanJump() && Value > 0.0f)
+	{
+		// 计算跳跃力度
+		FVector JumpDirection = FVector(0.0f, 0.0f, 1.0f); // 垂直向上
+		FVector JumpImpulse = JumpDirection * JumpStrength * Value;
+
+		// 应用跳跃力度
+		LaunchCharacter(JumpImpulse, false, false);
+	}
 }
