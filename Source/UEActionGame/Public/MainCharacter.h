@@ -23,8 +23,8 @@ public:
 	AMainCharacter();
 
 	// Declare a function to shoot the projectile
-	UFUNCTION(BlueprintCallable, Category = "MainCharacter")
-	void ShootProjectile();
+	//UFUNCTION(BlueprintCallable, Category = "MainCharacter")
+	//void ShootProjectile();
 
 protected:
 

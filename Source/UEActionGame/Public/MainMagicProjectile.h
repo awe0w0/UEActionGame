@@ -38,5 +38,5 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	// Declare FireInDirection function
-	void FireInDirection(const FVector& ShootDirection);
+	//void FireInDirection(const FVector& ShootDirection);
 };
