@@ -7,7 +7,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
-
+#include "MainInteractionComponent.h"
 
 // Sets default values
 AMainCharacter::AMainCharacter()
@@ -24,6 +24,8 @@ AMainCharacter::AMainCharacter()
 
 	CameraComp = CreateDefaultSubobject<UCameraComponent>("CameraComponent");
 	CameraComp->SetupAttachment(SpringArmComp);
+
+	InteractionComp = CreateDefaultSubobject<UMainInteractionComponent>("InteractionComp");
 
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 
@@ -61,6 +63,7 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	PlayerInputComponent->BindAxis("Lookup", this, &APawn::AddControllerPitchInput);
 
 	PlayerInputComponent->BindAction("PrimaryAttack", IE_Pressed, this, &AMainCharacter::PrimaryAttack);
+	PlayerInputComponent->BindAction("PrimaryInteract", IE_Pressed, this, &AMainCharacter::PrimaryInteract);
 
 	PlayerInputComponent->BindAxis("jump", this, &AMainCharacter::Jump);
 	// Bind the input to the ShootProjectile function
@@ -105,5 +108,11 @@ void AMainCharacter::Jump(float Value) {
 
 		// 应用跳跃力度
 		LaunchCharacter(JumpImpulse, false, false);
+	}
+}
+
+void AMainCharacter::PrimaryInteract() {
+	if (InteractionComp) {
+		InteractionComp->PrimaryInteract();
 	}
 }

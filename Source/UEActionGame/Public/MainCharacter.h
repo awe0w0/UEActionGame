@@ -8,6 +8,7 @@
 
 class USpringArmComponent;
 class UCameraComponent;
+class UMainInteractionComponent;
 
 UCLASS()
 class UEACTIONGAME_API AMainCharacter : public ACharacter
@@ -34,6 +35,9 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	UCameraComponent* CameraComp;
 
+	UPROPERTY(VisibleAnywhere)
+	UMainInteractionComponent* InteractionComp;
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
@@ -41,6 +45,7 @@ protected:
 	void MoveRight(float Value);
 	void Jump(float Value);
 	void PrimaryAttack();
+	void PrimaryInteract();
 
 public:	
 	// Called every frame

@@ -14,6 +14,11 @@ class UEACTIONGAME_API AMainItemChest : public AActor, public IMainGameplayInter
 {
 	GENERATED_BODY()
 
+public:
+
+	UPROPERTY(EditAnywhere)
+	float TargetPitch;
+
 	void Interact_Implementation(APawn* InstigatorPawn);
 	
 public:	
