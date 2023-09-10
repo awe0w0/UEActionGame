@@ -68,6 +68,7 @@ void UMainInteractionComponent::PrimaryInteract() {
 				APawn* MyPawn = Cast<APawn>(MyOwner);
 
 				IMainGameplayInterface::Execute_Interact(HitActor, MyPawn);
+				break;
 			}
 
 		}

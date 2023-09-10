@@ -9,16 +9,20 @@
 class USpringArmComponent;
 class UCameraComponent;
 class UMainInteractionComponent;
+class UAnimMontage;
 
 UCLASS()
 class UEACTIONGAME_API AMainCharacter : public ACharacter
 {
 	GENERATED_BODY()
 protected:
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Attack")
 	TSubclassOf<AActor> ProjectileClass;
 
+	UPROPERTY(EditAnywhere, Category = "Attack")
+	UAnimMontage* AttackAnim;
 
+	FTimerHandle TimerHandle_PrimaryAttack;
 public:
 	// Sets default values for this character's properties
 	AMainCharacter();
@@ -46,6 +50,7 @@ protected:
 	void Jump(float Value);
 	void PrimaryAttack();
 	void PrimaryInteract();
+	void PrimaryAttack_TimeElapsed();
 
 public:	
 	// Called every frame

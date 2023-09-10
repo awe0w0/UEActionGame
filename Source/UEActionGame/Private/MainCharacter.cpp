@@ -89,14 +89,29 @@ void AMainCharacter::MoveRight(float Value) {
 }
 
 void AMainCharacter::PrimaryAttack() {
-	FVector HandLocation = GetMesh()->GetSocketLocation("Muzzle_02");
+	PlayAnimMontage(AttackAnim);
 
-	FTransform SpawnTM = FTransform(GetControlRotation(), HandLocation);
+	//UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance(); // 获取角色的动画实例，MeshComponent 是您的角色的骨骼网格组件
 
-	FActorSpawnParameters SpawnParams;
-	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	//if (AnimInstance)
+	//{
+	//	// 设置要播放的 Montage
+	//	UAnimMontage* MontageToPlay = AttackAnim; // 将 YourAttackAnimMontage 替换为您的攻击动画 Montage
 
-	GetWorld()->SpawnActor<AActor>(ProjectileClass, SpawnTM, SpawnParams);
+	//	if (MontageToPlay)
+	//	{
+	//	// 设置 Montage 播放速率为 1.0，即最高权重
+	//		float PlayRate = 1.0f;
+
+	//		// 播放 Montage
+	//		AnimInstance->Montage_Play(MontageToPlay, PlayRate);
+	//	}
+	//}
+
+	GetWorldTimerManager().SetTimer(TimerHandle_PrimaryAttack, this, &AMainCharacter::PrimaryAttack_TimeElapsed, 0.2f);
+	//GetWorldTimerManager().ClearTimer(TimerHandle_PrimaryAttack);
+
+
 }
 
 void AMainCharacter::Jump(float Value) {
@@ -115,4 +130,15 @@ void AMainCharacter::PrimaryInteract() {
 	if (InteractionComp) {
 		InteractionComp->PrimaryInteract();
 	}
+}
+
+void AMainCharacter::PrimaryAttack_TimeElapsed() {
+	FVector HandLocation = GetMesh()->GetSocketLocation("Muzzle_02");
+
+	FTransform SpawnTM = FTransform(GetControlRotation(), HandLocation);
+
+	FActorSpawnParameters SpawnParams;
+	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+
+	GetWorld()->SpawnActor<AActor>(ProjectileClass, SpawnTM, SpawnParams);
 }
