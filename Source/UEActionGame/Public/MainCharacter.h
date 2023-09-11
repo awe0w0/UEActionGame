@@ -10,6 +10,7 @@ class USpringArmComponent;
 class UCameraComponent;
 class UMainInteractionComponent;
 class UAnimMontage;
+class UMainAttributesComponent;
 
 UCLASS()
 class UEACTIONGAME_API AMainCharacter : public ACharacter
@@ -41,6 +42,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere)
 	UMainInteractionComponent* InteractionComp;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Component")
+	UMainAttributesComponent* AttributeComp;
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

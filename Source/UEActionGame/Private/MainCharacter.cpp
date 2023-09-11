@@ -8,6 +8,7 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "MainInteractionComponent.h"
+#include "MainAttributesComponent.h"
 
 // Sets default values
 AMainCharacter::AMainCharacter()
@@ -26,6 +27,8 @@ AMainCharacter::AMainCharacter()
 	CameraComp->SetupAttachment(SpringArmComp);
 
 	InteractionComp = CreateDefaultSubobject<UMainInteractionComponent>("InteractionComp");
+
+	AttributeComp = CreateDefaultSubobject<UMainAttributesComponent>("AttributeComp");
 
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 
