@@ -133,6 +133,7 @@ void AMainCharacter::PrimaryInteract() {
 }
 
 void AMainCharacter::PrimaryAttack_TimeElapsed() {
+	if (ensure(ProjectileClass)) {
 	FVector HandLocation = GetMesh()->GetSocketLocation("Muzzle_02");
 
 	FTransform SpawnTM = FTransform(GetControlRotation(), HandLocation);
@@ -142,4 +143,6 @@ void AMainCharacter::PrimaryAttack_TimeElapsed() {
 	SpawnParams.Instigator = this;
 
 	GetWorld()->SpawnActor<AActor>(ProjectileClass, SpawnTM, SpawnParams);
+	}
+
 }
