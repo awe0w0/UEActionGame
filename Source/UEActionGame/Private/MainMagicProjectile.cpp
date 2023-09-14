@@ -29,8 +29,6 @@ AMainMagicProjectile::AMainMagicProjectile()
 	MovementComp->bRotationFollowsVelocity = true;
 	MovementComp->bInitialVelocityInLocalSpace = true;
 
-	
-
 }
 
 // Called when the game starts or when spawned
