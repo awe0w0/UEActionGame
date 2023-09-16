@@ -46,7 +46,7 @@ void AMainMagicProjectile::Tick(float DeltaTime)
 }
 
 void AMainMagicProjectile::OnActorOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
-	if (OtherActor) {
+	if (OtherActor && OtherActor != GetInstigator()) {
 		UMainAttributesComponent* AttributeComp = Cast<UMainAttributesComponent>(OtherActor->GetComponentByClass(UMainAttributesComponent::StaticClass()));
 		if (AttributeComp) {
 			AttributeComp->ApplyHealthChange(-20.0f);
