@@ -50,12 +50,21 @@ protected:
 	virtual void BeginPlay() override;
 
 	void MoveForward(float Value);
+	
 	void MoveRight(float Value);
+	
 	void Jump(float Value);
+	
 	void PrimaryAttack();
+	
 	void PrimaryInteract();
+	
 	void PrimaryAttack_TimeElapsed();
 
+	UFUNCTION()
+	void OnHealthChanged(AActor* InstigatorActor, UMainAttributesComponent* OwningComp, float NewHealth, float Delta);
+
+	virtual void PostInitializeComponents() override;
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

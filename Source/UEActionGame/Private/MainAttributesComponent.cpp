@@ -10,7 +10,7 @@ UMainAttributesComponent::UMainAttributesComponent()
 	Health = 100.0f;
 }
 
-bool UMainAttributesComponent::IsAlive() {
+bool UMainAttributesComponent::IsAlive() const {
 	return Health > 0.0f;
 }
 

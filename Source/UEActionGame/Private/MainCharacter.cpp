@@ -40,6 +40,12 @@ AMainCharacter::AMainCharacter()
 
 }
 
+void AMainCharacter::PostInitializeComponents() {
+	Super::PostInitializeComponents();
+
+	AttributeComp->OnHealthChanged.AddDynamic(this, &AMainCharacter::OnHealthChanged);
+}
+
 // Called when the game starts or when spawned
 void AMainCharacter::BeginPlay()
 {
@@ -148,4 +154,11 @@ void AMainCharacter::PrimaryAttack_TimeElapsed() {
 	GetWorld()->SpawnActor<AActor>(ProjectileClass, SpawnTM, SpawnParams);
 	}
 
+}
+
+void AMainCharacter::OnHealthChanged(AActor* InstigatorActor, UMainAttributesComponent* OwningComp, float NewHealth, float Delta) {
+	if (NewHealth <= 0.0f && Delta < 0.0f) {
+		APlayerController* PC = Cast<APlayerController>(GetController());
+		DisableInput(PC);
+	}
 }
