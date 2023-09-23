@@ -10,6 +10,9 @@ UMainAttributesComponent::UMainAttributesComponent()
 	Health = 100.0f;
 }
 
+bool UMainAttributesComponent::IsAlive() {
+	return Health > 0.0f;
+}
 
 bool UMainAttributesComponent::ApplyHealthChange(float Delta) {
 	Health += Delta;

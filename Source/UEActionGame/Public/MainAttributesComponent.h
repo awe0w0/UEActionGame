@@ -25,6 +25,9 @@ protected:
 
 public:	
 
+	UFUNCTION(BlueprintCallable)
+	bool IsAlive();
+
 	UPROPERTY(BlueprintAssignable)
 	FOnHealthChanged OnHealthChanged;
 
