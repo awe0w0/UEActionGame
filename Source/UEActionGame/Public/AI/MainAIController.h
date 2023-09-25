@@ -6,6 +6,8 @@
 #include "AIController.h"
 #include "MainAIController.generated.h"
 
+class UBehaviorTree;
+
 /**
  * 
  */
@@ -13,5 +15,12 @@ UCLASS()
 class UEACTIONGAME_API AMainAIController : public AAIController
 {
 	GENERATED_BODY()
+
+protected:
+
+	UPROPERTY(EditDefaultsOnly, Category = "AI")
+	UBehaviorTree* BehaviorTree;
+
+	virtual void BeginPlay() override;
 	
 };
