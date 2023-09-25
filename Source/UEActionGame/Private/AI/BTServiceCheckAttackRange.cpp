@@ -24,6 +24,12 @@ void UBTServiceCheckAttackRange::TickNode(UBehaviorTreeComponent& OwnerComp, uin
 
 					bool bWithinRange = DistanceTo < 2000.f;
 
+					bool bHasLOS = false;
+
+					if (bWithinRange) {
+						bHasLOS = MyController->LineOfSightTo(TargetActor);
+					}
+					
 					BlackBoardComp->SetValueAsBool(AttackRangeKey.SelectedKeyName, bWithinRange);
 				}
 			}
