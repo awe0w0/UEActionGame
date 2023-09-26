@@ -49,7 +49,7 @@ void AMainMagicProjectile::OnActorOverlap(UPrimitiveComponent* OverlappedCompone
 	if (OtherActor) {
 		UMainAttributesComponent* AttributeComp = Cast<UMainAttributesComponent>(OtherActor->GetComponentByClass(UMainAttributesComponent::StaticClass()));
 		if (AttributeComp) {
-			AttributeComp->ApplyHealthChange(-20.0f);
+			AttributeComp->ApplyHealthChange(-1.0f);
 
 			Destroy();
 		}
