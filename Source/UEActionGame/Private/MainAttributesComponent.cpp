@@ -16,11 +16,13 @@ bool UMainAttributesComponent::IsAlive() const {
 }
 
 bool UMainAttributesComponent::ApplyHealthChange(float Delta) {
-	Health += Delta;
+	float oldHealth = Health;
+	Health = FMath::Clamp(Health + Delta, 0.0f, HealthMax);
 
-	OnHealthChanged.Broadcast(nullptr, this, Health, Delta);
+	float ActualDelta = Health - oldHealth;
+	OnHealthChanged.Broadcast(nullptr, this, Health, ActualDelta);
 
-	return true;
+	return ActualDelta != 0;
 }
 
 bool UMainAttributesComponent::IsFullHealth() const
