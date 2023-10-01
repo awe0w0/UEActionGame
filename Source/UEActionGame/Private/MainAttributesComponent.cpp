@@ -7,7 +7,8 @@
 UMainAttributesComponent::UMainAttributesComponent()
 {
 
-	Health = 100.0f;
+	HealthMax = 100;
+	Health = HealthMax;
 }
 
 bool UMainAttributesComponent::IsAlive() const {
@@ -20,4 +21,26 @@ bool UMainAttributesComponent::ApplyHealthChange(float Delta) {
 	OnHealthChanged.Broadcast(nullptr, this, Health, Delta);
 
 	return true;
+}
+
+bool UMainAttributesComponent::IsFullHealth() const
+{
+	return Health == HealthMax;
+}
+
+
+float UMainAttributesComponent::GetHealth() const
+{
+	return Health;
+}
+
+float UMainAttributesComponent::GetHealthMax() const
+{
+	return HealthMax;
+}
+
+void UMainAttributesComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
 }

@@ -2,26 +2,42 @@
 
 
 #include "MainPowerupActor.h"
+#include "Components/SphereComponent.h"
 
 // Sets default values
 AMainPowerupActor::AMainPowerupActor()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	SphereComp = CreateDefaultSubobject<USphereComponent>("SphereComp");
+	SphereComp->SetCollisionProfileName("Powerup");
+	RootComponent = SphereComp;
+
+	RespawnTime = 10.0f;
 
 }
 
-// Called when the game starts or when spawned
-void AMainPowerupActor::BeginPlay()
+void AMainPowerupActor::Interact_Implementation(APawn* InstigatorPawn)
 {
-	Super::BeginPlay();
-	
+	// logic in derived classes...
 }
 
-// Called every frame
-void AMainPowerupActor::Tick(float DeltaTime)
+void AMainPowerupActor::ShowPowerup()
 {
-	Super::Tick(DeltaTime);
-
+	SetPowerupState(true);
 }
+
+
+void AMainPowerupActor::HideAndCooldownPowerup()
+{
+	SetPowerupState(false);
+
+	GetWorldTimerManager().SetTimer(TimerHandle_RespawnTimer, this, &AMainPowerupActor::ShowPowerup, RespawnTime);
+}
+
+void AMainPowerupActor::SetPowerupState(bool bNewIsActive)
+{
+	SetActorEnableCollision(bNewIsActive);
+
+	RootComponent->SetVisibility(bNewIsActive, true);
+}
+
 

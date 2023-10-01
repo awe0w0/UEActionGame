@@ -4,23 +4,46 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "MainGameplayInterface.h"
 #include "MainPowerupActor.generated.h"
 
-UCLASS()
+
+class USphereComponent;
+class UStaticMeshComponent;
+
+
+UCLASS(ABSTRACT)
 class UEACTIONGAME_API AMainPowerupActor : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
-	// Sets default values for this actor's properties
-	AMainPowerupActor();
 
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	UPROPERTY(EditAnywhere, Category = "Powerup")
+	float RespawnTime;
+
+	FTimerHandle TimerHandle_RespawnTimer;
+
+	UFUNCTION()
+	void ShowPowerup();
+
+	void HideAndCooldownPowerup();
+
+	void SetPowerupState(bool bNewIsActive);
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	USphereComponent* SphereComp;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UStaticMeshComponent* MeshComp;
+
+public:
+
+	void Interact_Implementation(APawn* InstigatorPawn);
+
+
+public:
+
+	AMainPowerupActor();
 
 };
