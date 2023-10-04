@@ -5,6 +5,9 @@
 #include "EnvironmentQuery/EnvQueryManager.h"	
 #include "EnvironmentQuery/EnvQueryTypes.h"
 #include "EnvironmentQuery/EnvQueryInstanceBlueprintWrapper.h"
+#include "AI/MainAICharacter.h"
+#include "MainAttributesComponent.h"
+#include "EngineUtils.h"
 
 AMainGameModeBase::AMainGameModeBase() {
 	SpawnTimerInterval = 2.0f;
@@ -29,6 +32,25 @@ void AMainGameModeBase::SpawnBotTimerElapsed() {
 void AMainGameModeBase::OnQueryCompleted(UEnvQueryInstanceBlueprintWrapper* QueryInstance, EEnvQueryStatus::Type QueryStatus) {
 	if (QueryStatus != EEnvQueryStatus::Success) {
 		UE_LOG(LogTemp, Warning, TEXT("Spawn bot EQS Query Failed!"));
+		return;
+	}
+	
+	int32 NrOfAliveBots = 0;
+	for (TActorIterator<AMainAICharacter> It(GetWorld()); It; ++It) {
+		AMainAICharacter* Bot = *It;
+
+		UMainAttributesComponent* AttributeComp = Cast<UMainAttributesComponent>(Bot->GetComponentByClass(UMainAttributesComponent::StaticClass()));
+		if (AttributeComp && AttributeComp->IsAlive()) {
+			NrOfAliveBots++;
+		}
+	}
+	float MaxBotCount = 10.0f;
+
+	if (DifficultyCurve) {
+		MaxBotCount = DifficultyCurve->GetFloatValue(GetWorld()->TimeSeconds);
+	}
+
+	if (NrOfAliveBots >= MaxBotCount) {
 		return;
 	}
 	

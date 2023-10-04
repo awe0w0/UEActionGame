@@ -13,6 +13,8 @@ AMainAICharacter::AMainAICharacter()
 {
 	PawnSensingComp = CreateDefaultSubobject<UPawnSensingComponent>("PawmSensingComp");
 
+	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
+
 }
 
 void AMainAICharacter::PostInitializeComponents() {
